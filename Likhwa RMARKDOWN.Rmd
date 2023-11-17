@@ -1,0 +1,81 @@
+---
+title: "switzerland rainfall"
+author: "L-SITHOLE"
+date: "2023-11-04"
+output: html_document
+---
+
+```{r}
+library(geoR)
+points(sic.100, borders=sic.borders,col="green")
+points(sic.367, borders=sic.borders,col="red",add=TRUE)
+```
+
+```{r}
+library(geoR)
+plot.geodata(sic.100,bor=sic.borders)
+```
+
+```{r}
+library(geoR)
+library(fields)
+library(gstat)
+vario.b<- variog(sic.100,option =c ("bin", "cloud", "smooth"),
+bin.cloud=TRUE)
+plot(vario.b)
+
+```
+
+```{r}
+library(geoR)
+library(fields)
+vario.b<- variog(sic.100,option =c ("bin", "cloud", "smooth"),
+bin.cloud=TRUE)
+```
+```{r}
+vario.c <- variog(sic.100, op="cloud")
+bplot.xy(vario.c$u,vario.c$v, breaks=vario.b$u,col="grey80",
+lwd=2,cex=0.1,outline=FALSE)
+```
+```{r}
+library(geoR)
+library(gstat)
+vario4<-variog4(sic.100)
+plot(vario4,same=FALSE)
+`
+```
+
+
+
+```{r}
+library(geoR)
+library(gstat)
+vario.ex<- variog(sic.100, bin.cloud=TRUE)
+plot(vario.ex)
+```
+```{r}
+library(geoR)
+vario.ex<- variog(sic.100,option="bin")
+vario.sphe<-(variofit(vario.ex,cov.model= "spher",
+ini.cov.pars=c(15000,200)))
+par(mfrow=c(2,2), mar=c(3,3,1,1), mgp =c (2,1,0))
+plot(vario.ex,main="Spherical")
+lines.variomodel(cov.model="sphe",cov.pars=c(15000,100),
+nug=0,max.dist=350)
+plot(vario.ex,main="Exponential")
+lines.variomodel(cov.model="exp",cov.pars=c(15000,100),
+nug=0,max.dist=350)
+library(gstat)
+```
+
+
+```{r}
+plot(vario.ex,main="Exponential with nugget effect")
+lines.variomodel(cov.model="exp",cov.pars=c(10000,100),
+nug=5000,max.dist=350)
+plot(vario.ex,main="Exponential with nugget effect")
+lines.variomodel(cov.model="matern",cov.pars=c(10000,100),
+nug=0,max.dist=350,kappa=0.5)
+```
+
+
